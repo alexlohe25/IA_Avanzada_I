@@ -109,6 +109,7 @@ plt.show()
 model_lasso = Lasso(alpha = 0.01)
 model_lasso.fit(X_train, Y_train)
 pred_train_lasso = model_lasso.predict(X_train)
+
 print("MSE in Lasso train: ", mean_squared_error(Y_train, pred_train_lasso))
 print("Lasso score train: ", r2_score(Y_train, pred_train_lasso))
 
