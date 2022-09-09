@@ -14,6 +14,7 @@ df = pd.read_csv('mod2_machinelearning/anime.csv', names = columns)
 
 #conversion de columnas principales a tipo float
 df['watched']= df['watched'][1:].astype(float)
+df['rating'] = df['rating'][1:].astype(float)
 
 #Limpieza de datos, considerando que no puede haber datos vacíos en dichas columnas
 df = df.drop(df[df.rating.isnull()].index)
@@ -24,10 +25,10 @@ df = df[df['watched'] > 0]
 print(df)
 
 #determinación de la variable correspondiente al eje X como el rating del anime
-X = np.array(df['rating'][1:].astype(float))
+X = np.array(df['rating'])
 
 #determinación de la variable Y como la cantidad de usuarios que han dicho haber visto el anime
-Y = np.array(df['watched'][1:])
+Y = np.array(df['watched'])
 
 
 
@@ -72,6 +73,7 @@ predict(m,c,4.5)
 predict(m,c,2.9)
 predict(m,c,1.3)
 predict(m,c,0.5)
+
 
 #graficacion de los datos 
 plt.scatter(X,Y)
