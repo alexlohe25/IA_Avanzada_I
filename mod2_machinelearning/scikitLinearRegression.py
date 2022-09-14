@@ -9,7 +9,7 @@ import math
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.linear_model import LinearRegression, Lasso
 
 
@@ -52,15 +52,16 @@ for i in custom_pred:
 
 #obtencion del error de prediccion en test y train
 Y_pred = regr.predict(X_test)
-Pred_error_test = Y_test - Y_pred
 Y_pred_train = regr.predict(X_train)
-Pred_error_train = Y_train - Y_pred_train
+cross_val = abs(cross_val_score(regr, X_train, Y_train, cv=10, scoring = "r2").mean())
 
 print("MSE test: ",mean_squared_error(Y_test, Y_pred))
 print("MSE train: ",mean_squared_error(Y_train, Y_pred_train))
 
 print("Model score test: ", r2_score(Y_test, Y_pred))
 print("Model score train: ", r2_score(Y_train, Y_pred_train	))
+
+print("Cross validation: ", cross_val)
 
 model_lasso = Lasso(alpha = 0.01)
 model_lasso.fit(X_train, Y_train)
@@ -72,6 +73,8 @@ print("MSE in Lasso test: ", mean_squared_error(Y_test, pred_test_lasso))
 
 print("Lasso score train: ", r2_score(Y_train, pred_train_lasso))
 print("Lasso score test: ", r2_score(Y_test, pred_test_lasso))
+
+
 
 #plot
 figure, axis = plt.subplots(2,2)
